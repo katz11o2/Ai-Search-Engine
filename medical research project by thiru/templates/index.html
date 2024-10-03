@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Search Engine for Medical</title>
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Video Background */
+        video.background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        /* Navigation bar */
+        .navbar {
+            position: fixed;
+            top: 30px;
+            width: 800px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.5);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            border-radius: 30px;
+            z-index: 1000;
+        }
+
+        /* Center navigation buttons */
+        .navbar .center-buttons button {
+            background-color: transparent;
+            border: none;
+            color: rgb(46, 1, 56);
+            font-weight: bold;
+            font-size: 1.3em;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        /* Right buttons (Login, Try for free) */
+        .navbar .right-buttons button {
+            background-color: #05283f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 1em;
+        }
+
+        .navbar .right-buttons button:hover {
+            background-color: #2980b9;
+        }
+
+        .navbar .center-buttons button:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: white;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 50px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            border-radius: 5px;
+            border: 2px solid #f1f3f4;
+            padding: 10px;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #021e30;
+            color: rgb(245, 239, 239);
+            border: none;
+            border-radius: 15px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background-color 0.5s ease;
+        }
+
+        button:hover {
+            background-color: #a143cd;
+        }
+
+        #search-terms-result {
+            font-weight: bold;
+            color: white;
+            margin-top: 20px;
+        }
+
+        #papers-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #papers-list li {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            text-decoration: none;
+            color: #f4f6f8;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Title */
+        .title {
+            margin-top: 150px;
+            text-align: center;
+            color: white;
+        }
+
+        /* Subtitle */
+        .subtitle {
+            text-align: center;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        /* Search box */
+        .search-box {
+            width: 100%;
+            max-width: 600px;
+            height: 50px;
+            padding: 10 10px;
+            border-radius: 5px;
+            border: 2px solid #021f31;
+            font-size: 1.1em;
+            text-align: left;
+        }
+
+        .search-box::placeholder {
+            color: #ccc;
+            
+        }
+
+        /* Ensure scrollable content */
+        html, body {
+            height: auto;
+        }
+
+        button.download {
+            background-color: #2c0541; /* Green download button */
+            margin-left: 70px;
+        }   
+
+        button.download:hover {
+            background-color: #efecf1; /* Darker green on hover */
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <video autoplay muted loop class="background-video">
+        <source src="static\Network Connection Background Video, Plexus Dot Connection Background Loop _ Free Stock Footage (1).mp4" type="video/mp4">
+        Your browser does not support HTML5 video.
+    </video>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <!-- Center buttons (About, Contact, Pricing, Resources) -->
+        <div class="center-buttons">
+            <button>About</button>
+            <button>Contact</button>
+            <button>Pricing</button>
+            <button>Resources</button>
+        </div>
+        
+        <!-- Right buttons (Login, Try for Free) -->
+        <div class="right-buttons">
+            <button>Login</button>
+            <button>Try for Free</button>
+        </div>
+    </div>
+
+    <!-- Title Section -->
+    <div class="title">
+        <h1>AI Search Engine for Medical</h1>
+    </div>
+
+    <!-- Subtitle Section -->
+    <div class="subtitle">
+        <p>Find & understand the best science, faster.</p>
+    </div>
+
+    <!-- Search Box -->
+    <form id="abstract-form">
+        <input type="text" class="search-box" id="abstract" placeholder="Ask your queries">
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="search-terms-result"></div>
+
+    <!-- Papers List -->
+    <ul id="papers-list"></ul>
+
+    <!-- JavaScript to handle form submission and search functionality -->
+    <script>
+        document.getElementById('abstract-form').onsubmit = async function(e) {
+            e.preventDefault();
+            let abstract = document.getElementById('abstract').value;
+
+            const response = await fetch('/extract_search_terms', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ abstract: abstract })
+            });
+
+            let result = await response.json();
+            if (response.ok) {
+                document.getElementById('search-terms-result').innerText = 'Extracted Search Terms: ' + result.search_terms;
+                await searchPapers(result.search_terms);
+            } else {
+                alert(result.error || 'An error occurred.');
+            }
+        };
+
+        async function searchPapers(search_terms) {
+            const response = await fetch('/search_papers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ search_terms: search_terms })
+            });
+
+            let result = await response.json();
+            let papersList = document.getElementById('papers-list');
+            papersList.innerHTML = '';
+
+            if (response.ok) {
+                result.papers.forEach(paper => {
+                    let li = document.createElement('li');
+                    li.innerHTML = `<a href="${paper.link}" target="_blank">${paper.title}</a>`;
+                    let downloadButton = document.createElement('button');
+                    downloadButton.innerText = 'Download';
+                    downloadButton.className = 'download';
+                    downloadButton.onclick = function() {
+                        confirmAndDownload(paper.link);
+                    };
+                    li.appendChild(downloadButton);
+                    papersList.appendChild(li);
+                });
+            } else {
+                alert(result.error || 'An error occurred.');
+            }
+        }
+
+        function confirmAndDownload(paper_url) {
+            if (confirm("Are you sure you want to download this paper?")) {
+                fetch('/download_paper', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ paper_url: paper_url })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        alert('Download failed. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    alert('Error occurred while downloading. Please try again.');
+                });
+            }
+        }
+
+        // Close the window when 'q' key is pressed
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'q' || event.key === 'Q') {
+                window.close();
+            }
+        });
+    </script>
+</body>
+</html>
